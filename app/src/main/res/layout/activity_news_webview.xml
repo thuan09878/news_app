@@ -6,18 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:background="@color/colorPrimary"
-        android:id="@+id/tool_bar"
-        app:title="@string/app_name"
-        app:titleTextColor="@color/white"
-        style="@style/ToolbarTheme"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:showIn="@layout/activity_main" />
+    <include layout="@layout/toolbar" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

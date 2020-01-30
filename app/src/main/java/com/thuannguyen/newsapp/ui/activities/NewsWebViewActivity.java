@@ -1,6 +1,5 @@
 package com.thuannguyen.newsapp.ui.activities;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -42,7 +41,7 @@ public class NewsWebViewActivity extends AppCompatActivity {
     }
 
     private void init() {
-        initViews();
+        bindViews();
         initWebView();
         initToolbar();
     }
@@ -89,7 +88,7 @@ public class NewsWebViewActivity extends AppCompatActivity {
         }
     }
 
-    private void initViews() {
+    private void bindViews() {
         webView = findViewById(R.id.web_view);
         progressBar = findViewById(R.id.progress_bar);
         toolbar = findViewById(R.id.tool_bar);

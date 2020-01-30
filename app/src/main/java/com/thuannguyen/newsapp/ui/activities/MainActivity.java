@@ -61,14 +61,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        progressBar = findViewById(R.id.progress_bar);
+        bindViews();
         initToolbar();
         initRefresh();
         initRcvNews();
     }
 
-    private void initRefresh() {
+    private void bindViews() {
+        progressBar = findViewById(R.id.progress_bar);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        rcvNews = findViewById(R.id.rcv_news);
+    }
+
+    private void initRefresh() {
         swipeRefreshLayout.setOnRefreshListener(() -> {
             swipeRefreshLayout.setRefreshing(false);
             newsAdapter.setNewsModelList(new ArrayList<>());
@@ -77,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRcvNews() {
-        rcvNews = findViewById(R.id.rcv_news);
 
         newsAdapter = new NewsAdapter(this, position -> {
             Intent intent = new Intent(this, NewsWebViewActivity.class);
