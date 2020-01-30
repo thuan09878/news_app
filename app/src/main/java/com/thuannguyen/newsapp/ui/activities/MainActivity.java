@@ -1,6 +1,8 @@
 package com.thuannguyen.newsapp.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +11,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Xml;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -17,6 +22,7 @@ import com.thuannguyen.newsapp.BuildConfig;
 import com.thuannguyen.newsapp.R;
 import com.thuannguyen.newsapp.models.NewsModel;
 import com.thuannguyen.newsapp.ui.adapter.NewsAdapter;
+import com.thuannguyen.newsapp.ui.utils.ThemeHelper;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -36,7 +42,6 @@ import static com.thuannguyen.newsapp.ui.activities.NewsWebViewActivity.ARGS_NEW
 
 public class MainActivity extends AppCompatActivity {
 
-
     private Toolbar toolbar;
     private RecyclerView rcvNews;
     private ProgressBar progressBar;
@@ -48,10 +53,44 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.DarkTheme);
+        } else {
+            setTheme(R.style.LightTheme);
+        }
         setContentView(R.layout.activity_main);
 
         initViews();
         fetchNews();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_change_theme:
+                changeTheme();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void changeTheme() {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+
+        finish();
+        startActivity(new Intent(MainActivity.this, MainActivity.this.getClass()));
     }
 
     @Override

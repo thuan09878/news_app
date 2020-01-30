@@ -28,6 +28,7 @@
             android:layout_height="match_parent"
             android:autofillHints="name"
             android:importantForAutofill="yes"
+            style="@style/DarkModeWebView"
             tools:targetApi="o" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
