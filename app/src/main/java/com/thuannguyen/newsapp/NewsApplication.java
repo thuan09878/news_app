@@ -1,7 +1,6 @@
 package com.thuannguyen.newsapp;
 
 import android.app.Application;
-
 import androidx.appcompat.app.AppCompatDelegate;
 
 public class NewsApplication extends Application {

@@ -72,10 +72,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsModelViewH
         }
 
         public void bind(@NonNull NewsModel newsModel) {
-            ((TextView) itemView.findViewById(R.id.titleText)).setText(newsModel.getTitle());
-            ((TextView) itemView.findViewById(R.id.pubDate))
+            ((TextView) itemView.findViewById(R.id.tv_title)).setText(newsModel.getTitle());
+            ((TextView) itemView.findViewById(R.id.tv_pub_date))
                     .setText(newsModel.getPubDate());
-            ((TextView) itemView.findViewById(R.id.linkText)).setText(newsModel.getLink());
+            ((TextView) itemView.findViewById(R.id.tv_link)).setText(newsModel.getLink());
         }
     }
 

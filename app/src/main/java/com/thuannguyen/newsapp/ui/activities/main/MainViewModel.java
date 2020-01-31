@@ -1,27 +1,13 @@
-package com.thuannguyen.newsapp.ui.activities;
+package com.thuannguyen.newsapp.ui.activities.main;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.os.Bundle;
 import android.util.Xml;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.thuannguyen.newsapp.BuildConfig;
-import com.thuannguyen.newsapp.R;
 import com.thuannguyen.newsapp.models.NewsModel;
-import com.thuannguyen.newsapp.ui.adapter.NewsAdapter;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -37,96 +23,45 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.thuannguyen.newsapp.ui.activities.NewsWebViewActivity.ARGS_NEWS_MODEL;
+public class MainViewModel extends ViewModel {
+    private CompositeDisposable compositeDisposable;
 
-public class MainActivity extends AppCompatActivity {
+    private MutableLiveData<List<NewsModel>> listNewsLiveData = null;
+    private MutableLiveData<Boolean> isThemeChangedLiveData = null;
 
-    private Toolbar toolbar;
-    private RecyclerView rcvNews;
-    private ProgressBar progressBar;
-
-    private NewsAdapter newsAdapter;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        int currentNightMode = getResources().getConfiguration().uiMode
-                & Configuration.UI_MODE_NIGHT_MASK;
-
-
-
-        setContentView(R.layout.activity_main);
-
-        initViews();
-        fetchNews();
+    public MainViewModel(CompositeDisposable compositeDisposable) {
+        this.compositeDisposable = compositeDisposable;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_change_theme:
-                changeTheme();
-                break;
-            default:
-                break;
+    public MutableLiveData<List<NewsModel>> getListNewsLiveData() {
+        if (listNewsLiveData == null) {
+            listNewsLiveData = new MutableLiveData<>();
+            fetchNews();
         }
-        return super.onOptionsItemSelected(item);
+        return listNewsLiveData;
     }
 
-    private void changeTheme() {
+    public void setListNewsLiveData(List<NewsModel> listNewsLiveData) {
+        this.listNewsLiveData.setValue(listNewsLiveData);
+    }
+
+    public MutableLiveData<Boolean> getIsThemeChangedLiveData() {
+        if (isThemeChangedLiveData == null) {
+            isThemeChangedLiveData = new MutableLiveData<>();
+        }
+        return isThemeChangedLiveData;
+    }
+
+    public void changeTheme() {
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
-        finish();
-        startActivity(new Intent(MainActivity.this, MainActivity.this.getClass()));
+        isThemeChangedLiveData.setValue(true);
     }
 
-    @Override
-    protected void onDestroy() {
-        compositeDisposable.dispose();
-        super.onDestroy();
-    }
-
-    private void initViews() {
-        bindViews();
-        initToolbar();
-        initRcvNews();
-    }
-
-    private void bindViews() {
-        progressBar = findViewById(R.id.progress_bar);
-        rcvNews = findViewById(R.id.rcv_news);
-    }
-
-    private void initRcvNews() {
-
-        newsAdapter = new NewsAdapter(this, position -> {
-            Intent intent = new Intent(this, NewsWebViewActivity.class);
-            intent.putExtra(ARGS_NEWS_MODEL, newsAdapter.getNewsModelList().get(position));
-            startActivity(intent);
-        });
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        rcvNews.setLayoutManager(layoutManager);
-        rcvNews.setHasFixedSize(true);
-        rcvNews.setAdapter(newsAdapter);
-    }
-
-    private void initToolbar() {
-        toolbar = findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
-    }
-
-    private void fetchNews() {
-        progressBar.setVisibility(View.VISIBLE);
+    public void fetchNews() {
         String rssUrl = BuildConfig.NEWS_RSS_URL;
 
         compositeDisposable.add(Single.fromCallable(() -> {
@@ -136,11 +71,9 @@ public class MainActivity extends AppCompatActivity {
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(news -> {
-                    progressBar.setVisibility(View.GONE);
-                    newsAdapter.setNewsModelList(news);
+                    listNewsLiveData.postValue(news);
                 }, throwable -> {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(MainActivity.this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
+                    listNewsLiveData.postValue(new ArrayList<>());
                 }));
     }
 
@@ -218,5 +151,11 @@ public class MainActivity extends AppCompatActivity {
         } finally {
             inputStream.close();
         }
+    }
+
+    @Override
+    protected void onCleared() {
+        compositeDisposable.dispose();
+        super.onCleared();
     }
 }

@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <include
+        layout="@layout/toolbar" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -15,23 +16,15 @@
         android:layout_height="@dimen/padding_4"
         app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
+    <WebView
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:forceDarkAllowed="true"
+        android:autofillHints="name"
+        android:importantForAutofill="yes"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tool_bar">
-
-        <WebView
-            android:id="@+id/web_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:autofillHints="name"
-            android:theme="@style/DarkModeWebView"
-            android:importantForAutofill="yes"
-            tools:targetApi="o" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar"
+        tools:targetApi="o" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

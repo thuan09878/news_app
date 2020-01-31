@@ -2,10 +2,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="?selectableItemBackground"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/titleText"
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?textAppearanceSearchResultTitle"
@@ -16,7 +17,7 @@
         tools:text="Title" />
 
     <TextView
-        android:id="@+id/pubDate"
+        android:id="@+id/tv_pub_date"
         tools:text="pubDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +26,7 @@
         />
 
     <TextView
-        android:id="@+id/linkText"
+        android:id="@+id/tv_link"
         tools:text="url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

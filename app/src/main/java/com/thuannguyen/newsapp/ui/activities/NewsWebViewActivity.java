@@ -13,7 +13,6 @@ import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.thuannguyen.newsapp.R;
 import com.thuannguyen.newsapp.models.NewsModel;
@@ -25,7 +24,6 @@ public class NewsWebViewActivity extends AppCompatActivity {
     private WebView webView;
     private ProgressBar progressBar;
     private Toolbar toolbar;
-    private SwipeRefreshLayout swipeRefreshLayout;
 
     private NewsModel newsModel;
 
@@ -37,8 +35,6 @@ public class NewsWebViewActivity extends AppCompatActivity {
         newsModel = getIntent().getParcelableExtra(ARGS_NEWS_MODEL);
 
         init();
-        swipeRefreshLayout.setOnRefreshListener(this::loadNewsUrl);
-
         loadNewsUrl();
     }
 
@@ -91,7 +87,6 @@ public class NewsWebViewActivity extends AppCompatActivity {
 
     private void loadNewsUrl() {
         if (newsModel != null && newsModel.getLink() != null) {
-            swipeRefreshLayout.setRefreshing(false);
             progressBar.setProgress(0);
             progressBar.setVisibility(View.VISIBLE);
             webView.loadUrl(newsModel.getLink());
@@ -102,7 +97,6 @@ public class NewsWebViewActivity extends AppCompatActivity {
         webView = findViewById(R.id.web_view);
         progressBar = findViewById(R.id.progress_bar);
         toolbar = findViewById(R.id.tool_bar);
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
     }
 
     private void initToolbar() {
