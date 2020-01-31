@@ -41,10 +41,6 @@ public class MainViewModel extends ViewModel {
         return listNewsLiveData;
     }
 
-    public void setListNewsLiveData(List<NewsModel> listNewsLiveData) {
-        this.listNewsLiveData.setValue(listNewsLiveData);
-    }
-
     public MutableLiveData<Boolean> getIsThemeChangedLiveData() {
         if (isThemeChangedLiveData == null) {
             isThemeChangedLiveData = new MutableLiveData<>();

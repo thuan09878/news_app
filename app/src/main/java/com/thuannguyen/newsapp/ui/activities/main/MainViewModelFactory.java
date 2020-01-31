@@ -8,7 +8,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class MainViewModelFactory implements ViewModelProvider.Factory {
 
-    CompositeDisposable compositeDisposable;
+    private CompositeDisposable compositeDisposable;
 
     public MainViewModelFactory(CompositeDisposable compositeDisposable) {
         this.compositeDisposable = compositeDisposable;
