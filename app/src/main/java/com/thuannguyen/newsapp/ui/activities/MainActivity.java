@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Xml;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -22,7 +22,6 @@ import com.thuannguyen.newsapp.BuildConfig;
 import com.thuannguyen.newsapp.R;
 import com.thuannguyen.newsapp.models.NewsModel;
 import com.thuannguyen.newsapp.ui.adapter.NewsAdapter;
-import com.thuannguyen.newsapp.ui.utils.ThemeHelper;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -45,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RecyclerView rcvNews;
     private ProgressBar progressBar;
-    private SwipeRefreshLayout swipeRefreshLayout;
 
     private NewsAdapter newsAdapter;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -53,11 +51,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-            setTheme(R.style.DarkTheme);
-        } else {
-            setTheme(R.style.LightTheme);
-        }
+        int currentNightMode = getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK;
+
+
+
         setContentView(R.layout.activity_main);
 
         initViews();
@@ -88,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
-
         finish();
         startActivity(new Intent(MainActivity.this, MainActivity.this.getClass()));
     }
@@ -102,22 +99,12 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         bindViews();
         initToolbar();
-        initRefresh();
         initRcvNews();
     }
 
     private void bindViews() {
         progressBar = findViewById(R.id.progress_bar);
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         rcvNews = findViewById(R.id.rcv_news);
-    }
-
-    private void initRefresh() {
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            swipeRefreshLayout.setRefreshing(false);
-            newsAdapter.setNewsModelList(new ArrayList<>());
-            fetchNews();
-        });
     }
 
     private void initRcvNews() {

@@ -19,6 +19,7 @@
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:forceDarkAllowed="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tool_bar">
 
@@ -27,8 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:autofillHints="name"
+            android:theme="@style/DarkModeWebView"
             android:importantForAutofill="yes"
-            style="@style/DarkModeWebView"
             tools:targetApi="o" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

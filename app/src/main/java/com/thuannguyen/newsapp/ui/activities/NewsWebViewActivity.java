@@ -1,6 +1,7 @@
 package com.thuannguyen.newsapp.ui.activities;
 
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -50,22 +51,20 @@ public class NewsWebViewActivity extends AppCompatActivity {
     private void initWebView() {
         progressBar.setMax(100);
         progressBar.setProgress(0);
-        webView.clearCache(true);
+
         webView.setInitialScale(1);
 
         WebSettings wSettings = webView.getSettings();
 
-//        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-//        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
-//            wSettings.setForceDark(WebSettings.FORCE_DARK_ON);
-//        }
+        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            wSettings.setForceDark(WebSettings.FORCE_DARK_ON);
+        }
 
         wSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         wSettings.setDefaultTextEncodingName("utf-8");
         wSettings.setLoadsImagesAutomatically(true);
         wSettings.setLoadWithOverviewMode(true);
-        webView.getSettings().setAppCacheEnabled(true);
-        webView.getSettings().setLoadsImagesAutomatically(true);
         wSettings.setDomStorageEnabled(true);
         wSettings.setUserAgentString("Mozilla/5.0 (Linux; U; Android 4.4; ko-kr; "
                 + "LG-L160L Build/IML74K) AppleWebkit/537.36 (KHTML, like Gecko) "
