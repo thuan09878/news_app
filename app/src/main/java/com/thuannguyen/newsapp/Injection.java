@@ -1,19 +1,17 @@
 package com.thuannguyen.newsapp;
 
-import android.content.Context;
-
 import com.thuannguyen.newsapp.ui.activities.main.MainViewModelFactory;
 
 import io.reactivex.disposables.CompositeDisposable;
 
 public class Injection {
 
-    public static CompositeDisposable provideCompositeDisposable(Context context) {
+    public static CompositeDisposable provideCompositeDisposable() {
         return new CompositeDisposable();
     }
 
-    public static MainViewModelFactory provideViewModelFactory(Context context) {
-        CompositeDisposable compositeDisposable = provideCompositeDisposable(context);
+    public static MainViewModelFactory provideViewModelFactory() {
+        CompositeDisposable compositeDisposable = provideCompositeDisposable();
         return new MainViewModelFactory(compositeDisposable);
     }
 }

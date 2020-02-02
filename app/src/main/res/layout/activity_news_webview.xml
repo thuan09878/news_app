@@ -7,14 +7,7 @@
     android:orientation="vertical">
 
     <include
-        layout="@layout/toolbar" />
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/padding_4"
-        app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
+        layout="@layout/layout_toolbar" />
 
     <WebView
         android:id="@+id/web_view"
@@ -26,5 +19,11 @@
         app:layout_constraintTop_toBottomOf="@+id/tool_bar"
         tools:targetApi="o" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_4"
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

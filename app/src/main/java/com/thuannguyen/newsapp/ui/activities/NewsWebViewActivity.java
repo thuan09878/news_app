@@ -52,10 +52,7 @@ public class NewsWebViewActivity extends AppCompatActivity {
 
         WebSettings wSettings = webView.getSettings();
 
-        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            wSettings.setForceDark(WebSettings.FORCE_DARK_ON);
-        }
+        forceDarkModeOnAndroidQ(wSettings);
 
         wSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         wSettings.setDefaultTextEncodingName("utf-8");
@@ -83,6 +80,13 @@ public class NewsWebViewActivity extends AppCompatActivity {
             }
         });
         webView.setWebViewClient(new WebViewClient());
+    }
+
+    private void forceDarkModeOnAndroidQ(WebSettings wSettings) {
+        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            wSettings.setForceDark(WebSettings.FORCE_DARK_ON);
+        }
     }
 
     private void loadNewsUrl() {

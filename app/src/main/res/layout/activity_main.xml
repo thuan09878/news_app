@@ -7,7 +7,7 @@
     tools:context=".ui.activities.main.MainActivity">
 
     <include
-        layout="@layout/toolbar" />
+        layout="@layout/layout_toolbar" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
@@ -26,7 +26,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tool_bar"
-            tools:listitem="@layout/news_item" />
+            tools:listitem="@layout/layout_news_item" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 

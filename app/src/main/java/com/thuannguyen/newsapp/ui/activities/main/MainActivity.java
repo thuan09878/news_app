@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
 
-        MainViewModelFactory mainViewModelFactory = Injection.provideViewModelFactory(this);
+        MainViewModelFactory mainViewModelFactory = Injection.provideViewModelFactory();
         mainViewModel = new ViewModelProvider(this, mainViewModelFactory).get(MainViewModel.class);
 
         setupObservers();
